@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sea Glass | Premium Botanical Infrastructure</title>
+    <!-- AUTHORIZE.NET ACCEPT.JS -->
+    <script type="text/javascript" src="https://jstest.authorize.net/v1/Accept.js" charset="utf-8"></script>
+    <style>
+        :root {
+            --bg-color: #F7F7F7; /* Apothecary White */
+            --text-color: #1A1A1A; /* Dark Gray */
+            --accent-color: #004225; /* British Racing Green */
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        /* AGE GATE MODAL */
+        #age-gate {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(26, 26, 26, 0.98);
+            color: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            text-align: center;
+            padding: 2rem;
+        }
+        #age-gate h1 { font-size: 1.5rem; margin-bottom: 1rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; }
+        #age-gate p { margin-bottom: 2rem; font-size: 0.9rem; opacity: 0.7; }
+        .btn-gate {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            border: none; padding: 1rem 3rem; font-size: 1rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer;
+            width: 100%; max-width: 300px; margin-bottom: 1rem;
+        }
+        .btn-gate-deny { background: transparent; color: var(--bg-color); border: 1px solid var(--bg-color); }
+
+        /* HEADER & HERO */
+        header { padding: 2rem 1.5rem; text-align: center; border-bottom: 1px solid rgba(26,26,26,0.1); }
+        header h1 { font-size: 1.2rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; }
+        .hero { padding: 4rem 1.5rem; text-align: center; }
+        .hero h2 { font-size: 2rem; font-weight: 300; margin-bottom: 1rem; }
+        .hero p { opacity: 0.7; font-size: 0.95rem; max-width: 400px; margin: 0 auto; }
+
+        /* PRODUCT GRID (VEBLEN EFFECT ISOLATION) */
+        .grid { display: flex; flex-direction: column; gap: 2rem; padding: 0 1.5rem 4rem 1.5rem; }
+        .product-card {
+            background: #FFFFFF;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(26,26,26,0.05);
+        }
+        .product-img { width: 100%; height: 250px; background: #EFEFEF; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: #999; }
+        .product-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .product-desc { font-size: 0.85rem; opacity: 0.7; margin-bottom: 1.5rem; }
+        .product-price { font-size: 1.2rem; font-weight: 300; margin-bottom: 1.5rem; }
+
+        /* SECURE CHECKOUT MODULE (AUTH.NET) */
+        .checkout-module { background: var(--bg-color); padding: 1.5rem; border: 1px solid rgba(26,26,26,0.2); margin-top: 1rem; }
+        .checkout-module h3 { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 1rem; border-bottom: 1px solid rgba(26,26,26,0.1); padding-bottom: 0.5rem; }
+        .auth-net-form { display: flex; flex-direction: column; gap: 0.75rem; }
+        .auth-net-form input { padding: 1rem; border: 1px solid rgba(26,26,26,0.2); font-family: inherit; font-size: 1rem; background: #FFFFFF; border-radius: 0; -webkit-appearance: none; }
+        .payment-row { display: flex; gap: 0.75rem; }
+        .payment-row input { flex: 1; }
+        .btn-pay { background: var(--accent-color); color: #FFFFFF; border: none; padding: 1.2rem; font-size: 1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer; margin-top: 0.5rem; }
+
+        /* FOOTER FOR UNDERWRITING COMPLIANCE */
+        footer { padding: 3rem 1.5rem; background: var(--text-color); color: var(--bg-color); text-align: center; font-size: 0.8rem; }
+        .footer-links { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem; opacity: 0.7; }
+        .footer-links a { color: var(--bg-color); text-decoration: none; text-transform: uppercase; letter-spacing: 0.05em; }
+    </style>
+</head>
+<body>
+
+    <!-- AGE GATE -->
+    <div id="age-gate">
+        <h1>Age Verification</h1>
+        <p>You must be 21 years of age or older to enter this site. By proceeding, you verify that you are of legal purchasing age in your jurisdiction.</p>
+        <button class="btn-gate" onclick="verifyAge()">I am 21 or older</button>
+        <button class="btn-gate btn-gate-deny" onclick="denyAge()">I am under 21</button>
+    </div>
+
+    <!-- HEADER -->
+    <header>
+        <h1>Sea Glass</h1>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <h2>Uncompromised Purity.</h2>
+        <p>Premium botanical infrastructure and hardware. Stripped of excess, designed for the connoisseur.</p>
+    </section>
+
+    <!-- PRODUCT DISPLAY -->
+    <section class="grid">
+        <!-- PRODUCT 1 -->
+        <div class="product-card">
+            <div class="product-img">[ PRODUCT IMAGE SPACE - STARK WHITE BG ]</div>
+            <h3 class="product-title">Cookies™ Extract Vaporizer</h3>
+            <p class="product-desc">Authentic hardware. Precision heating for uncompromised flavor in a sleek, discrete chassis.</p>
+            <div class="product-price">$45.00</div>
+            
+            <!-- CHECKOUT UI -->
+            <div class="checkout-module">
+                <h3>Secure Checkout</h3>
+                <div class="auth-net-form">
+                    <input type="text" id="cardNumber" placeholder="Card Number" inputmode="numeric" required />
+                    <div class="payment-row">
+                        <input type="text" id="expMonth" placeholder="MM" maxlength="2" inputmode="numeric" required />
+                        <input type="text" id="expYear" placeholder="YY" maxlength="2" inputmode="numeric" required />
+                        <input type="text" id="cardCode" placeholder="CVC" maxlength="4" inputmode="numeric" required />
+                    </div>
+                    <button type="button" class="btn-pay" onclick="sendPaymentDataToAnet()">Process Payment</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMPLIANCE FOOTER -->
+    <footer>
+        <div class="footer-links">
+            <a href="#tos">Terms of Service</a>
+            <a href="#privacy">Privacy Policy</a>
+            <a href="#refunds">Refund & Return Policy</a>
+            <a href="#fda">FDA Disclaimer</a>
+        </div>
+        <p>&copy; 2026 Sea Glass. All products contain less than 0.3% Delta-9 THC. Consume responsibly.</p>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script type="text/javascript">
+        // AGE GATE LOGIC
+        function verifyAge() {
+            document.getElementById('age-gate').style.display = 'none';
+        }
+        function denyAge() {
+            window.location.href = "https://www.google.com";
+        }
+
+        // AUTHORIZE.NET LOGIC
+        function sendPaymentDataToAnet() {
+            // [!] REPLACE THESE WITH YOUR PAYMENTCLOUD ISSUED KEYS
+            var authData = {};
+                authData.clientKey = "YOUR_PUBLIC_CLIENT_KEY";
+                authData.apiLoginID = "YOUR_API_LOGIN_ID";
+
+            var cardData = {};
+                cardData.cardNumber = document.getElementById("cardNumber").value;
+                cardData.month = document.getElementById("expMonth").value;
+                cardData.year = document.getElementById("expYear").value;
+                cardData.cardCode = document.getElementById("cardCode").value;
+
+            var secureData = {};
+                secureData.authData = authData;
+                secureData.cardData = cardData;
+
+            // Change UI to show processing state
+            document.querySelector('.btn-pay').innerText = "Processing...";
+            
+            Accept.dispatchData(secureData, responseHandler);
+        }
+
+        function responseHandler(response) {
+            document.querySelector('.btn-pay').innerText = "Process Payment";
+            if (response.messages.resultCode === "Error") {
+                for (var i = 0; i < response.messages.message.length; i++) {
+                    console.log(response.messages.message[i].code + ": " + response.messages.message[i].text);
+                    alert("Transaction Error: " + response.messages.message[i].text);
+                }
+            } else {
+                // SUCCESS: The payment token is ready.
+                // In production, this token is sent to your backend server (Node/Python) to finalize the charge via API.
+                alert("Payment Authorized. Token: " + response.opaqueData.dataValue);
+            }
+        }
+    </script>
+</body>
+</html>
+
